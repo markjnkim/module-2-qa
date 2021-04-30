@@ -14,6 +14,14 @@ Resources:
     Properties:
       Handler: src/handlers/get-all-thoughts.getAllThoughtsHandler
       Runtime: nodejs14.x
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the ThoughtsTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ThoughtsTable
+      Environment:
+        Variables:
+          # Make table name accessible as environment variable from function code during execution
+          TABLE_NAME: !Ref ThoughtsTable
       Events:
         ThoughtsApi:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -21,28 +29,73 @@ Resources:
             Path: /api/users
             Method: GET
   getByUserFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function 
     Properties:
       Handler: src/handlers/get-by-user.getByUserHandler
       Runtime: nodejs14.x
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the ThoughtsTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ThoughtsTable
+      Environment:
+        Variables:
+          # Make table name accessible as environment variable from function code during execution
+          TABLE_NAME: !Ref ThoughtsTable
       Events:
         ThoughtsApi:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api 
           Properties:
             Path: /api/users/{username}
             Method: GET
   putThought:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function 
     Properties:
       Handler: src/handlers/put-thought.putThoughtHandler
       Runtime: nodejs14.x
+
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the ThoughtsTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ThoughtsTable
+      Environment:
+        Variables:
+          # Make table name accessible as environment variable from function code during execution
+          TABLE_NAME: !Ref ThoughtsTable
       Events:
         ThoughtsApi:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api 
           Properties:
             Path: /api/users
             Method: POST
-
+  # ThoughtsTable:
+  #   Type: AWS::Serverless::SimpleTable
+  #   Properties:
+  #     PrimaryKey:
+  #       Name: username
+  #       Type: String
+  #     ProvisionedThroughput:
+  #       ReadCapacityUnits: 2
+  #       WriteCapacityUnits: 2
+  ThoughtsTable: 
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      AttributeDefinitions: 
+        - 
+          AttributeName: "username"
+          AttributeType: "S"
+        - 
+          AttributeName: "createdAt"
+          AttributeType: "S"
+      KeySchema: 
+        - 
+          AttributeName: "username"
+          KeyType: "HASH"
+        - 
+          AttributeName: "createdAt"
+          KeyType: "RANGE"
+      ProvisionedThroughput: 
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
 Outputs:
   ThoughtsApi:
     Description: "API Gateway endpoint URL for Prod stage for Thoughts application"

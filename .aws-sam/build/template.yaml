@@ -12,6 +12,14 @@ Resources:
     Properties:
       Handler: src/handlers/get-all-thoughts.getAllThoughtsHandler
       Runtime: nodejs14.x
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: ThoughtsTable
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: ThoughtsTable
       Events:
         ThoughtsApi:
           Type: Api
@@ -24,6 +32,14 @@ Resources:
     Properties:
       Handler: src/handlers/get-by-user.getByUserHandler
       Runtime: nodejs14.x
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: ThoughtsTable
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: ThoughtsTable
       Events:
         ThoughtsApi:
           Type: Api
@@ -36,6 +52,14 @@ Resources:
     Properties:
       Handler: src/handlers/put-thought.putThoughtHandler
       Runtime: nodejs14.x
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: ThoughtsTable
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: ThoughtsTable
       Events:
         ThoughtsApi:
           Type: Api
@@ -43,6 +67,22 @@ Resources:
             Path: /api/users
             Method: POST
       CodeUri: putThought
+  ThoughtsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: username
+        AttributeType: S
+      - AttributeName: createdAt
+        AttributeType: S
+      KeySchema:
+      - AttributeName: username
+        KeyType: HASH
+      - AttributeName: createdAt
+        KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
 Outputs:
   ThoughtsApi:
     Description: API Gateway endpoint URL for Prod stage for Thoughts application
