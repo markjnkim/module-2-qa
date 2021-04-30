@@ -16,8 +16,7 @@ exports.putThoughtHandler = async (event) => {
 
   // Get username and thought from the body of the request
   const body = JSON.parse(event.body);
-  const username = body.username;
-  const thought = body.thought;
+  const { username, thought } = body;
   const rightNow = Date.now().toString();
 
   const params = {
@@ -29,7 +28,7 @@ exports.putThoughtHandler = async (event) => {
 
   const response = {
     statusCode: 200,
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
   };
 
   // All log statements are written to CloudWatch
