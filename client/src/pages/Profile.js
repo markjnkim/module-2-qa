@@ -15,12 +15,13 @@ const Profile = props => {
   // retrieve thoughts from the user on component mount
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`/api/users/${userParam}`, {
+      const res = await fetch(`https://4w5771k1x9.execute-api.us-east-2.amazonaws.com/Prod/api/users/${userParam}`, {
         mode: 'cors',
         headers: {
           ContentType: 'application/json'
         }
       });
+      
       const data = await res.json();
 
       setThoughts(data);

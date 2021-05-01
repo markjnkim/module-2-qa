@@ -41,7 +41,7 @@ const ThoughtForm = () => {
     event.preventDefault();
 
     const postData = async () => {
-      const res = await fetch('/api/users', {
+      const res = await fetch('https://4w5771k1x9.execute-api.us-east-2.amazonaws.com/Prod/api/users', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

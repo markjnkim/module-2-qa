@@ -10,7 +10,6 @@
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build",
     "seed": "node ./server/db/LoadThoughts.js",
-    "create": "node ./server/db/CreateThoughtsTable.js",
     "init": "npm run create && npm run seed"
   },
   "keywords": [],
