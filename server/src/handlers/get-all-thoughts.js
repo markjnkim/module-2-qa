@@ -16,13 +16,15 @@ exports.getAllThoughtsHandler = async (event) => {
 
   const params = {
     TableName: tableName,
-    ScanIndexForward: true,
   };
   const data = await docClient.scan(params).promise();
   const items = data.Items;
 
   const response = {
     statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
+    },
     body: JSON.stringify(items),
   };
 

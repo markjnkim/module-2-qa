@@ -74,7 +74,7 @@ Resources:
       - AttributeName: username
         AttributeType: S
       - AttributeName: createdAt
-        AttributeType: S
+        AttributeType: N
       KeySchema:
       - AttributeName: username
         KeyType: HASH

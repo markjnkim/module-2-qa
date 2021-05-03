@@ -10,7 +10,7 @@ console.log("Importing thoughts into DynamoDB. Please wait.");
 const allUsers = JSON.parse(fs.readFileSync('./server/seed/users.json', 'utf8'));
 allUsers.forEach(user => {
   const params = {
-    TableName: "ThoughtsTable",
+    TableName: "test-thought-stack-ThoughtsTable-1U2DJPMR797GN",
     Item: {
       "username": user.username,
       "createdAt": user.createdAt,

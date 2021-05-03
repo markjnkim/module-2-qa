@@ -9,7 +9,7 @@
     "start:dev": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build",
-    "seed": "node ./server/db/LoadThoughts.js",
+    "seed": "node ./server/seed/LoadThoughts.js",
     "init": "npm run create && npm run seed"
   },
   "keywords": [],
