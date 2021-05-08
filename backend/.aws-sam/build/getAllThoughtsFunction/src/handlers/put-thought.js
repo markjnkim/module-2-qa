@@ -1,18 +1,13 @@
 // Create a DocumentClient that represents the query to add an item
-const dynamodb = require("aws-sdk/clients/dynamodb");
+const dynamodb = require('aws-sdk/clients/dynamodb');
 const docClient = new dynamodb.DocumentClient();
 
 // Get the DynamoDB table name from environment variables
 const tableName = process.env.TABLE_NAME;
 
 exports.putThoughtHandler = async (event) => {
-  // if (event.httpMethod !== "POST") {
-  //   throw new Error(
-  //     `putThought only accept POST method, you tried: ${event.httpMethod}`
-  //   );
-  // }
   // All log statements are written to CloudWatch
-  console.info("received:", "TABLENAME:", tableName, event);
+  console.info('received:', 'TABLENAME:', tableName, event);
 
   // Get username and thought from the body of the request
   const { username, thought } = JSON.parse(event.body);

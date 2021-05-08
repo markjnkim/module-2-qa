@@ -67,6 +67,54 @@ Resources:
           Properties:
             Path: /api/users
             Method: POST
+  getPreUrl:
+    Type: AWS::Serverless::Function 
+    Properties:
+      Handler: src/handlers/get-pre.getPreUrlHandler
+      Runtime: nodejs14.x
+      Environment:
+        Variables:
+          UPLOAD_BUCKET: !Ref S3UploadBucket  
+      Policies:
+        - S3WritePolicy:
+            BucketName: !Ref S3UploadBucket
+        ## This permission allows the Lambda function to request signed URLs
+        ## for objects that will be publicly readable.
+        - Statement:
+          - Effect: Allow
+            Resource: !Sub 'arn:aws:s3:::${S3UploadBucket}/'
+            Action:
+              - s3:putObjectAcl
+      Events:
+        ThoughtsApi:
+          Type: Api 
+          Properties:
+            Path: /api/pre-url
+            Method: GET
+  getUrlFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      Handler: src/handlers/get-url.getUrlHandler
+      Runtime: nodejs14.x
+      Environment:
+        Variables:
+          UPLOAD_BUCKET: !Ref S3UploadBucket  
+      Policies:
+        - S3WritePolicy:
+            BucketName: !Ref S3UploadBucket
+        ## This permission allows the Lambda function to request signed URLs
+        ## for objects that will be publicly readable.
+        - Statement:
+          - Effect: Allow
+            Resource: !Sub 'arn:aws:s3:::${S3UploadBucket}/'
+            Action:
+              - s3:putObjectAcl
+      Events:
+        ThoughtsApi:
+          Type: Api
+          Properties:
+            Path: /api/url
+            Method: GET
 
   ThoughtsTable: 
     Type: AWS::DynamoDB::Table
@@ -88,6 +136,20 @@ Resources:
       ProvisionedThroughput: 
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+  ## S3 bucket
+  S3UploadBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      CorsConfiguration:
+        CorsRules:
+        - AllowedHeaders:
+            - "*"
+          AllowedMethods:
+            - GET
+            - PUT
+            - HEAD
+          AllowedOrigins:
+            - "*"
 Outputs:
   ThoughtsApi:
     Description: "API Gateway endpoint URL for Prod stage for Thoughts application"
@@ -95,4 +157,7 @@ Outputs:
   ThoughtsTable:
     Description: "DynamoDB table"
     Value: !GetAtt ThoughtsTable.Arn
+  S3UploadBucketName:
+    Description: "S3 bucket for image uploads"
+    Value: !Ref "S3UploadBucket"
   

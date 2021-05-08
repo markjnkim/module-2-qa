@@ -5,11 +5,6 @@ const docClient = new dynamodb.DocumentClient();
 const tableName = process.env.TABLE_NAME;
 
 exports.getAllThoughtsHandler = async (event) => {
-  // if (event.httpMethod !== 'GET') {
-  //   throw new Error(
-  //     `getAllThoughts only accept GET method, you tried: ${event.httpMethod}`
-  //   );
-  // }
   // All log statements are written to CloudWatch
   console.info('received: ', event);
   console.info('headers: ', 'added');
