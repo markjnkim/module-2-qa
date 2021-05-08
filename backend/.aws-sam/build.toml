@@ -6,6 +6,6 @@ codeuri = "/Users/mkim1/Curriculum/tech-track/module-2/hello-word/backend"
 runtime = "nodejs14.x"
 source_md5 = ""
 packagetype = "Zip"
-functions = ["getAllThoughtsFunction", "getByUserFunction", "putThought", "getPreUrl", "getUrlFunction"]
+functions = ["getAllThoughtsFunction", "getByUserFunction", "putThought", "getPreUrl"]
 
 [layer_build_definitions]

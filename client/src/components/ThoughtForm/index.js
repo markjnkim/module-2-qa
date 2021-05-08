@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { formatUrl } from '@aws-sdk/util-format-url';
 
 const ThoughtForm = () => {
   const [formState, setFormState] = useState({ username: '', thought: '', image: '' });
@@ -12,9 +13,10 @@ const ThoughtForm = () => {
     // post image to S3 bucket
     const postImage = async () => {
       try {
-        const res = await fetch('/api/image-upload', {
-          mode: 'cors',
-          method: 'POST',
+        const {uploadURL, Key} = await fetch('https://5panwslpf6.execute-api.us-east-2.amazonaws.com/Prod/api/pre-url')
+
+        const res = await fetch(formatUrl(uploadURL), {
+          method: 'PUT',
           body: data
         })
         if (!res.ok) throw new Error(res.statusText);

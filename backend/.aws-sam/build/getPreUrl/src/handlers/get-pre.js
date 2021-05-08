@@ -6,14 +6,7 @@ const s3 = new AWS.S3();
 const URL_EXPIRATION_SECONDS = 300;
 exports.getPreUrlHandler = async (event, context) => {
   console.log("REGION: ", process.env.AWS_REGION);
-  // const response = {
-  //   statusCode: 200,
-  //   body: JSON.stringify({
-  //     message: "get Pre URL",
-  //   }),
-  // };
 
-  // return response;
   return await getUploadURL(event);
 };
 
@@ -33,26 +26,19 @@ const getUploadURL = async function (event) {
 
   const uploadURL = await s3.getSignedUrlPromise("putObject", s3Params);
   const response = {
+    headers: {
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
+    },
     body: JSON.stringify({
       Key: Key,
       uploadURL: uploadURL,
     })
   };
 
-  console.log("Params: ", s3Params);
-  console.info("uploadURL: ", uploadURL);
+  console.info("Params: ", s3Params);
   console.info("response: ", response);
 
   return response;
 };
-
-
-// const response = {
-//   statusCode: 200,
-//   headers: {
-//     'Access-Control-Allow-Headers': 'Content-Type',
-//     'Access-Control-Allow-Origin': '*',
-//     'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
-//   },
-//   body: JSON.stringify(Items),
-// };
