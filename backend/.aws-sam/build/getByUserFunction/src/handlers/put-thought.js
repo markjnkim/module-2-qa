@@ -10,11 +10,11 @@ exports.putThoughtHandler = async (event) => {
   console.info('received:', 'TABLENAME:', tableName, event);
 
   // Get username and thought from the body of the request
-  const { username, thought } = JSON.parse(event.body);
+  const { username, thought, image } = JSON.parse(event.body);
 
   const params = {
     TableName: tableName,
-    Item: { username: username, thought: thought, createdAt: Date.now() },
+    Item: { username: username, thought: thought, image: image, createdAt: Date.now() },
   };
   
   // Handle db operation errors w/ a try/catch block

@@ -47,7 +47,7 @@ Resources:
             Path: /api/users/{username}
             Method: GET
       CodeUri: getByUserFunction
-  putThought:
+  putThoughtFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/put-thought.putThoughtHandler
@@ -66,11 +66,11 @@ Resources:
           Properties:
             Path: /api/users
             Method: POST
-      CodeUri: putThought
-  getPreUrl:
+      CodeUri: putThoughtFunction
+  getUrlFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/get-pre.getPreUrlHandler
+      Handler: src/handlers/get-url.getUrlHandler
       Runtime: nodejs14.x
       Environment:
         Variables:
@@ -92,7 +92,7 @@ Resources:
           Properties:
             Path: /api/pre-url
             Method: GET
-      CodeUri: getPreUrl
+      CodeUri: getUrlFunction
   ThoughtsTable:
     Type: AWS::DynamoDB::Table
     Properties:

@@ -4,8 +4,8 @@ const s3 = new AWS.S3();
 
 // Change this value to adjust the signed URL's expiration
 const URL_EXPIRATION_SECONDS = 300;
-exports.getPreUrlHandler = async (event, context) => {
-  console.log("REGION: ", process.env.AWS_REGION);
+exports.getUrlHandler = async (event, context) => {
+  // console.log("REGION: ", process.env.AWS_REGION);
 
   return await getUploadURL(event);
 };
@@ -34,11 +34,13 @@ const getUploadURL = async function (event) {
     body: JSON.stringify({
       Key: Key,
       uploadURL: uploadURL,
+      region: process.env.AWS_REGION,
+      bucket: process.env.UPLOAD_BUCKET,
     })
   };
 
-  console.info("Params: ", s3Params);
-  console.info("response: ", response);
+  // console.info("Params: ", s3Params);
+  // console.info("response: ", response);
 
   return response;
 };
