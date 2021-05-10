@@ -33,7 +33,7 @@ const getUploadURL = async function (event) {
     },
     body: JSON.stringify({
       uploadURL: uploadURL,
-      url: `https://${process.env.UPLOAD_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${Key}`,
+      publicURL: `https://${process.env.UPLOAD_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${Key}`,
     })
   };
 

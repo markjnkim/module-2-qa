@@ -18,66 +18,38 @@ const ThoughtForm = () => {
     return await res.json();
   };
 
+  const setImageData = async (objectURL) => {
+    const res = await setFormState({ ...formState, image: objectURL });
+  };
+
   const handleImageUpload = async (event) => {
     event.preventDefault();
     const file = fileInput.current.files[0];
     // retrieve the URL and file name
+    // console.log(file);
     try {
-      var s3res = await getUploadUrl();
+      var { uploadURL, publicURL } = await getUploadUrl();
     } catch (err) {
       console.error(err);
     }
 
-    // if (!s3res.ok) throw new Error(s3res);
+    const setRes = await setImageData(publicURL);
 
-    const { uploadURL, Key, bucket, region } = s3res;
-    console.log("uploadURL: ", uploadURL, "Key: ", Key);
-    console.log("bucket: ", bucket, "region: ", region);
-
-    const data = new FormData();
-    data.append('image', fileInput.current.files[0]);
-
-    console.log("data: ", data);
-    console.log("fileInput: ", fileInput.current.files[0]);
-    // create a binary file from the file
-    // let blobData = new Blob([new Uint8Array(fileInput.current.files)], { type: 'image/jpg'}); 
-
-  //  try {
+    try {
       var result = await fetch(uploadURL, {
-        method: 'PUT',
+        method: "PUT",
         body: file,
-      })
-    // } catch(err) {
-    //   console.error(err);
-    // }
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    
+    if (setRes) {
+      console.log("publicURL: ", publicURL);
+      console.log("formState: ", formState);
+    }
 
-
-    // const { uploadUrl, Key } = await getUploadUrl();
-    // console.info(uploadUrl, Key);
-    // console.log(JSON.stringify(uploadUrl), JSON.stringify(Key));
-    // const data = new FormData();
-    // data.append('image', fileInput.current.files[0]);
-    // alert(JSON.stringify(data));
-    // // post image to S3 bucket
-    // const postImage = async () => {
-
-    //     const uploadS3URL = getUploadUrl();
-    //     console.log(uploadS3URL);
-
-    // const res = await fetch(uploadS3URL, {
-    //   method: 'PUT',
-    //   body: data
-    // })
-    // if (!res.ok) throw new Error(res.statusText);
-    // const postResponse = await res.json();
-    // setFormState({...formState, image: postResponse.Location})
-    // console.log("formState", formState);
-    // console.log("uploadURL", JSON.stringify(uploadS3URL));
-
-    // return postResponse.Location;
-
-    // };
-    // postImage();
+    return formState;
   };
 
   // update state based on form input changes
@@ -105,7 +77,7 @@ const ThoughtForm = () => {
         }
       );
       const data = await res.json();
-      console.log(data);
+      console.log("Submit: ", formState);
     };
 
     postData();
