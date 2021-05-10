@@ -20,7 +20,7 @@ const ThoughtForm = () => {
 
   const handleImageUpload = async (event) => {
     event.preventDefault();
-    const file = fileInput.current.files
+    const file = fileInput.current.files[0];
     // retrieve the URL and file name
     try {
       var s3res = await getUploadUrl();
@@ -33,20 +33,19 @@ const ThoughtForm = () => {
     const { uploadURL, Key, bucket, region } = s3res;
     console.log("uploadURL: ", uploadURL, "Key: ", Key);
     console.log("bucket: ", bucket, "region: ", region);
+
     const data = new FormData();
     data.append('image', fileInput.current.files[0]);
 
     console.log("data: ", data);
     console.log("fileInput: ", fileInput.current.files[0]);
     // create a binary file from the file
-    // let blobData = new Blob([new Uint8Array(fileInput.current.files)], { type: 'image/jpg'});
-
-    const formData = new FormData(file);
+    // let blobData = new Blob([new Uint8Array(fileInput.current.files)], { type: 'image/jpg'}); 
 
   //  try {
       var result = await fetch(uploadURL, {
         method: 'PUT',
-        body: formData,
+        body: file,
       })
     // } catch(err) {
     //   console.error(err);
