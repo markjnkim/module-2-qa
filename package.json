@@ -1,12 +1,10 @@
 {
-  "name": "sls-thought",
+  "name": "deep-thoughts",
   "version": "1.0.0",
-  "description": "",
+  "description": "A React client and serverless backend using AWS",
   "main": "client/index.js",
   "scripts": {
-    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:dev": "cd client && npm start",
-    "start:prod": "cd client && npm start",
+    "start": "cd client && npm start",
     "sam": "cd backend && sam build && sam deploy",
     "install": "cd client && npm i",
     "build": "cd client && npm run build",
@@ -15,12 +13,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "aws-sdk": "^2.753.0",
-    "if-env": "^1.0.4"
-  },
-  "devDependencies": {
-    "concurrently": "^5.1.0"
-  }
+  "license": "ISC"
 }
