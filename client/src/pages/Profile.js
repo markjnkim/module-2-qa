@@ -21,6 +21,8 @@ const Profile = props => {
 
       setThoughts(data);
       setIsLoaded(true);
+      console.log("thoughts: ", thoughts);
+      console.log("data: ", data);  
     };
     fetchData();
   }, [userParam]); // warning if dependency not tracked by useEffect

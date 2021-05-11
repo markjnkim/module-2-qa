@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-// import { formatUrl } from "@aws-sdk/util-format-url";
 
 const ThoughtForm = () => {
   const [formState, setFormState] = useState({
@@ -14,12 +13,15 @@ const ThoughtForm = () => {
     const res = await fetch(
       "https://5panwslpf6.execute-api.us-east-2.amazonaws.com/Prod/api/pre-url"
     );
+    const jsonRes = await res.json();
+    console.log(jsonRes);
 
-    return await res.json();
+    return jsonRes;
   };
 
   const setImageData = async (objectURL) => {
-    const res = await setFormState({ ...formState, image: objectURL });
+    
+    return await setFormState({ ...formState, image: objectURL });
   };
 
   const handleImageUpload = async (event) => {
@@ -32,18 +34,18 @@ const ThoughtForm = () => {
     } catch (err) {
       console.error(err);
     }
-
     const setRes = await setImageData(publicURL);
 
     try {
-      var result = await fetch(uploadURL, {
+      var resUploadURL = await fetch(uploadURL, {
         method: "PUT",
         body: file,
       });
+      console.log("result: ", resUploadURL);
     } catch (err) {
       console.error(err);
     }
-    
+
     if (setRes) {
       console.log("publicURL: ", publicURL);
       console.log("formState: ", formState);
@@ -60,7 +62,7 @@ const ThoughtForm = () => {
     }
   };
 
-  // submit form
+  // Invoked when Submit button is clicked
   const handleFormSubmit = (event) => {
     event.preventDefault();
 

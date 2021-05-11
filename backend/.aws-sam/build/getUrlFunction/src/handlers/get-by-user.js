@@ -17,11 +17,12 @@ exports.getByUserHandler = async (event) => {
       '#un': 'username',
       '#ca': 'createdAt',
       '#th': 'thought',
+      '#im': 'image',
     },
     ExpressionAttributeValues: {
       ':user': username,
     },
-    ProjectionExpression: '#un, #th, #ca', 
+    ProjectionExpression: '#un, #th, #ca, #im', 
     ScanIndexForward: false, // false makes the order descending(true is default)
   };
   
