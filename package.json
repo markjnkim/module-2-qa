@@ -10,6 +10,7 @@
     "sam": "cd backend && sam build && sam deploy",
     "install": "cd client && npm i",
     "build": "cd client && npm run build",
+    "deploy": "aws s3 sync build/ s3://my-thought-client-bucket",
     "seed": "node ./backend/src/seed/LoadThoughts.js"
   },
   "keywords": [],
