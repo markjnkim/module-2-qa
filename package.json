@@ -2,7 +2,6 @@
   "name": "deep-thoughts",
   "version": "1.0.0",
   "description": "A React client and serverless backend using AWS",
-  "main": "client/index.js",
   "scripts": {
     "start": "cd client && npm start",
     "sam": "cd backend && sam build && sam deploy",

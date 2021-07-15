@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from '../../../../lesson-3/client/node_modules/@types/react';
 import { useParams } from 'react-router-dom';
 import ThoughtList from '../components/ThoughtList';
 

@@ -12,9 +12,13 @@ exports.getAllThoughtsHandler = async (event) => {
   const params = {
     TableName: tableName,
   };
-  
+  // Read all Items in table
   const { Items } = await docClient.scan(params).promise();
-  
+  // Sort the data by the timestamp
+  const _sortItems = await Items.sort((a, b) => {
+    a.createdAt < b.createdAt ? 1 : -1
+  });
+
   const response = {
     statusCode: 200,
     headers: {

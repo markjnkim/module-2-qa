@@ -1,4 +1,4 @@
-import React from 'react';
+import React from '../../../../../lesson-3/client/node_modules/@types/react';
 import { Link } from 'react-router-dom';
 
 // Renders the list of thoughts

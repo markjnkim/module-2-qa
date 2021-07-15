@@ -1,4 +1,6 @@
-# sls-thought
+# Deep Thoughts
+
+A Serverless Application using AWS services
 
 DynamoDB table
 API Gateway

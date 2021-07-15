@@ -1,7 +1,7 @@
 // Import the DynamoDB service
 const dynamodb = require('aws-sdk/clients/dynamodb');
 const docClient = new dynamodb.DocumentClient();
-// Get the  table name from environment variable
+// Get the table name from environment variable
 const tableName = process.env.TABLE_NAME;
 
 exports.getByUserHandler = async (event) => {
@@ -23,7 +23,7 @@ exports.getByUserHandler = async (event) => {
       ':user': username,
     },
     ProjectionExpression: '#un, #th, #ca, #im', 
-    ScanIndexForward: false, // false makes the order descending(true is default)
+    ScanIndexForward: false, // false makes the order descending, true is default
   };
   
   const { Items } = await docClient.query(params).promise();

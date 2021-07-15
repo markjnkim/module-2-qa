@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef } from "../../../../../lesson-3/client/node_modules/@types/react";
 
 const ThoughtForm = () => {
   const [formState, setFormState] = useState({
